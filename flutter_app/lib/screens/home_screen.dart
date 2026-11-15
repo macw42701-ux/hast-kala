@@ -28,6 +28,16 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF128C7E),
+        foregroundColor: Colors.white,
+        tooltip: 'WhatsApp Support',
+        onPressed: () {
+          final url = firebase.buildSupportWhatsappUrl('919876543210');
+          firebase.launchWhatsapp(url);
+        },
+        child: const Icon(Icons.chat),
+      ),
       body: StreamBuilder<List<CraftProduct>>(
         stream: firebase.streamProducts(),
         builder: (context, snapshot) {

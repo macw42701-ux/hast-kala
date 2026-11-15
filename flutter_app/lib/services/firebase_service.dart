@@ -102,6 +102,12 @@ class FirebaseService {
     return 'https://wa.me/$cleanPhone?text=${Uri.encodeComponent(summary.toString())}';
   }
 
+  String buildSupportWhatsappUrl(String adminWhatsapp) {
+    final cleanPhone = adminWhatsapp.replaceAll(RegExp(r'[^0-9]'), '');
+    const msg = 'Namaste Hast Kala! I have a question about your handcrafted products.';
+    return 'https://wa.me/$cleanPhone?text=${Uri.encodeComponent(msg)}';
+  }
+
   Future<void> launchWhatsapp(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {

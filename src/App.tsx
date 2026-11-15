@@ -54,6 +54,7 @@ import { WishlistView } from './components/WishlistView';
 import { AccountView } from './components/AccountView';
 import { AdminPage } from './components/AdminPage';
 import { OfflineIndicator, PWAInstallButton } from './components/PWAInstallButton';
+import { WhatsAppSupportFab } from './components/WhatsAppSupportFab';
 
 type CollectionFilter = 'all' | 'featured' | 'newArrival' | 'bestSeller' | 'specialOffer';
 
@@ -1078,6 +1079,8 @@ export default function App() {
         onPlaceOrder={handlePlaceOrder}
         onViewOrders={() => setActiveTab('orders')}
       />
+
+      <WhatsAppSupportFab whatsappNumber={storeSettings.whatsappNumber} lang={lang} />
 
       <OfflineIndicator />
     </div>

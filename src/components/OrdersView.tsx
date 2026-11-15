@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Check, Clock, MessageCircle, Package, Trash2, Truck, XCircle } from 'lucide-react';
-import { Language, ORDER_STATUS_FLOW, Order, OrderStatus } from '../types';
+import { MessageCircle, Package, Trash2, Truck, XCircle } from 'lucide-react';
+import { Language, Order } from '../types';
 import { t } from '../i18n/translations';
 import { SpendingTrendsChart } from './SpendingTrendsChart';
+import { OrderTracking } from './OrderTracking';
 
 interface OrdersViewProps {
   lang: Language;
@@ -14,8 +15,6 @@ interface OrdersViewProps {
   onDeleteOrder: (orderId: string) => Promise<void>;
   onClearOrders: () => Promise<void>;
 }
-
-const ACTIVE_STEPS: OrderStatus[] = ORDER_STATUS_FLOW.filter((s) => s !== 'Cancelled');
 
 export const OrdersView: React.FC<OrdersViewProps> = ({
   lang,
@@ -114,7 +113,6 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
       ) : (
         <div className="space-y-6">
           {orders.map((order) => {
-            const currentStepIdx = ACTIVE_STEPS.indexOf(order.status);
             const isCancelled = order.status === 'Cancelled';
 
             return (
@@ -185,61 +183,7 @@ export const OrdersView: React.FC<OrdersViewProps> = ({
                   ))}
                 </div>
 
-                {/* 8-Stage Status Progress */}
-                {!isCancelled && (
-                  <div className="pt-2">
-                    <p className="text-xs font-medium uppercase tracking-wider text-[#66615B] mb-3">
-                      {copy.statusTimeline}
-                    </p>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
-                      {ACTIVE_STEPS.map((step, idx) => {
-                        const completed = idx <= currentStepIdx;
-                        return (
-                          <div
-                            key={step}
-                            className={`p-2.5 rounded-lg border text-xs ${
-                              completed
-                                ? 'border-[#1E3A5F] bg-[#1E3A5F]/5 text-[#1C1B19]'
-                                : 'border-[#E5E1D8] text-[#66615B]'
-                            }`}
-                          >
-                            <div className="flex items-center gap-1.5 font-medium">
-                              {completed ? (
-                                <Check className="w-3.5 h-3.5 text-[#1E3A5F] shrink-0" />
-                              ) : (
-                                <Clock className="w-3.5 h-3.5 text-[#66615B]/60 shrink-0" />
-                              )}
-                              <span className="truncate">{copy.statusLabels[step]}</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {/* Detailed Status History Log */}
-                <div className="bg-[#F9F8F6] rounded-lg p-4 border border-[#E5E1D8] space-y-2">
-                  {order.statusHistory.map((entry, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-wrap items-baseline justify-between gap-2 text-xs"
-                    >
-                      <span className="font-medium text-[#1C1B19]">
-                        {copy.statusLabels[entry.status]}
-                        {entry.note ? ` — ${entry.note}` : ''}
-                      </span>
-                      <span className="text-[#66615B] tabular-nums">
-                        {new Date(entry.timestamp).toLocaleString()}
-                      </span>
-                    </div>
-                  ))}
-                  {order.adminRemarks && (
-                    <p className="pt-2 border-t border-[#E5E1D8] text-xs text-[#1E3A5F] font-medium">
-                      {copy.adminRemarks}: {order.adminRemarks}
-                    </p>
-                  )}
-                </div>
+                <OrderTracking order={order} lang={lang} />
 
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                   <a

@@ -24,3 +24,12 @@ export function buildProductWhatsappUrl(
 
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
+
+export function buildStoreSupportWhatsappUrl(whatsappNumber: string, lang: Language): string {
+  const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
+  const message =
+    lang === 'gu'
+      ? 'નમસ્તે હસ્ત કલા! મને તમારી હસ્તનિર્મિત કૃતિઓ વિશે પૂછપરછ કરવી છે.'
+      : 'Namaste Hast Kala! I have a question about your handcrafted products.';
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
