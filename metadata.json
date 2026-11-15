@@ -1,0 +1,6 @@
+{
+  "name": "Hast Kala",
+  "description": "Authentic Indian handicraft shopping application with bilingual English & Gujarati support, WhatsApp order confirmation, live 8-stage order tracking, and administrator management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

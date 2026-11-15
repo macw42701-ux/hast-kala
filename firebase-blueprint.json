@@ -1,0 +1,154 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Handcrafted product item sold in the Hast Kala storefront.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "nameEn": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "nameGu": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "descriptionEn": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "descriptionGu": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "category": { "type": "string", "enum": ["pottery", "textiles", "brassware", "woodcraft", "decor"] },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "stock": { "type": "number" },
+        "images": { "type": "array" },
+        "featured": { "type": "boolean" },
+        "newArrival": { "type": "boolean" },
+        "bestSeller": { "type": "boolean" },
+        "specialOffer": { "type": "boolean" },
+        "ratingAvg": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "nameEn", "nameGu", "descriptionEn", "descriptionGu", "category", "price", "discountPrice", "stock", "images", "featured", "newArrival", "bestSeller", "specialOffer", "ratingAvg", "reviewCount", "createdAt", "updatedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Customer profile and private delivery details isolated to owner and admin.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "phone": { "type": "string", "minLength": 0, "maxLength": 20 },
+        "email": { "type": "string", "minLength": 0, "maxLength": 160 },
+        "address": { "type": "string", "minLength": 0, "maxLength": 400 },
+        "language": { "type": "string", "enum": ["en", "gu"] },
+        "role": { "type": "string", "enum": ["customer", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "phone", "email", "address", "language", "role", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authorized administrator registry entry.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer handicraft order with 8-stage fulfillment tracking.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderCode": { "type": "string", "minLength": 4, "maxLength": 32 },
+        "customerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "customerPhone": { "type": "string", "minLength": 8, "maxLength": 20 },
+        "deliveryAddress": { "type": "string", "minLength": 5, "maxLength": 400 },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["Order Received", "Order Confirmed", "Processing", "Ready for Dispatch", "Shipped", "Out for Delivery", "Delivered", "Cancelled"] },
+        "statusHistory": { "type": "array" },
+        "adminRemarks": { "type": "string", "minLength": 0, "maxLength": 300 },
+        "estimatedDelivery": { "type": "string", "minLength": 0, "maxLength": 60 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "orderCode", "customerId", "customerName", "customerPhone", "deliveryAddress", "items", "subtotal", "totalAmount", "status", "statusHistory", "adminRemarks", "estimatedDelivery", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Verified purchaser product review with admin moderation state.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "productId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "rating": { "type": "number" },
+        "comment": { "type": "string", "minLength": 3, "maxLength": 600 },
+        "approved": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "productId", "orderId", "customerId", "customerName", "rating", "comment", "approved", "createdAt", "updatedAt"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Storefront configuration including admin WhatsApp number and offer banner.",
+      "type": "object",
+      "properties": {
+        "whatsappNumber": { "type": "string", "minLength": 8, "maxLength": 20 },
+        "storeName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "bannerTextEn": { "type": "string", "minLength": 0, "maxLength": 180 },
+        "bannerTextGu": { "type": "string", "minLength": 0, "maxLength": 180 },
+        "bannerActive": { "type": "boolean" },
+        "freeShippingThreshold": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["whatsappNumber", "storeName", "bannerTextEn", "bannerTextGu", "bannerActive", "freeShippingThreshold", "updatedAt"]
+    },
+    "WishlistItem": {
+      "title": "WishlistItem",
+      "description": "Product saved for later by a logged-in customer.",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Handcrafted product catalog items."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private customer profile records."
+    },
+    "/users/{userId}/wishlist/{productId}": {
+      "schema": { "$ref": "#/entities/WishlistItem" },
+      "description": "Private saved wishlist items owned by the user."
+    },
+    "/admins/{uid}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Authorized administrator registry."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders and fulfillment tracking history."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Verified purchaser reviews subject to admin moderation."
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/StoreSettings" },
+      "description": "Storefront configuration including WhatsApp order contact."
+    }
+  }
+}
